@@ -82,7 +82,8 @@ export class EarthbarStore {
         this.currentWorkspace = {
             workspaceAddress: '+lobbydev.a1',
             pubs: [
-                'https://earthstar-demo-pub-v5-a.glitch.me/',
+                `${location.origin}/pub/`
+                // 'https://earthstar-demo-pub-v5-a.glitch.me/',
             ],
         };
         /*

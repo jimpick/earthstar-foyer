@@ -24501,7 +24501,7 @@ module.exports={
   "_args": [
     [
       "elliptic@6.5.3",
-      "/Users/rabbit/projects/earthstar-foyer"
+      "/Users/jim/projects/hexcamp/sandstorm-earthstar-foyer/earthstar-foyer"
     ]
   ],
   "_development": true,
@@ -24527,7 +24527,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.5.3.tgz",
   "_spec": "6.5.3",
-  "_where": "/Users/rabbit/projects/earthstar-foyer",
+  "_where": "/Users/jim/projects/hexcamp/sandstorm-earthstar-foyer/earthstar-foyer",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -69602,7 +69602,8 @@ class EarthbarStore {
             this.currentWorkspace = {
                 workspaceAddress: '+lobbydev.a1',
                 pubs: [
-                    'https://earthstar-demo-pub-v5-a.glitch.me/',
+                    `${location.origin}/pub/`
+                    // 'https://earthstar-demo-pub-v5-a.glitch.me/',
                 ],
             };
         /*
