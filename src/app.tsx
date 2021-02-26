@@ -6,6 +6,7 @@ import { FoyerApp } from './apps/foyerApp';
 import { HelloApp } from './apps/helloApp';
 import { DebugApp } from './apps/debugApp';
 import { TodoApp } from './apps/todoApp';
+import delay from 'delay';
 
 //================================================================================
 // MAIN
@@ -27,3 +28,14 @@ ReactDOM.render(
     <Earthbar apps={apps} />,
     document.getElementById('react-slot')
 );
+
+// Sandstorm keep-alive
+
+async function keepAlive () {
+    while (true) {
+        console.log('Keep-alive fetch...')
+        const resp = await fetch('/.keep-alive')
+        await delay(1000)
+    }
+}
+keepAlive()
