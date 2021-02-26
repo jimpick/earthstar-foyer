@@ -68875,10 +68875,10 @@ const delay_1 = __importDefault(require("delay"));
 // DisplayText: Component
 // first app listed here is the default
 let apps = {
-    "Todos": todoApp_1.TodoApp,
-    "Foyer": foyerApp_1.FoyerApp,
-    "Debug View": debugApp_1.DebugApp,
-    "Hello World": helloApp_1.HelloApp,
+    Todos: todoApp_1.TodoApp,
+    Foyer: foyerApp_1.FoyerApp,
+    'Debug View': debugApp_1.DebugApp,
+    'Hello World': helloApp_1.HelloApp
 };
 ReactDOM.render(React.createElement(earthbar_1.Earthbar, { apps: apps }), document.getElementById('react-slot'));
 // Sandstorm keep-alive
@@ -68892,6 +68892,34 @@ function keepAlive() {
     });
 }
 keepAlive();
+// Powerbox-http-proxy
+function getWebSocketUrl() {
+    const protocol = window.location.protocol.replace('http', 'ws');
+    return protocol + '//' + window.location.host + '/_sandstorm/websocket';
+}
+function connectWebSocket() {
+    console.log('Connecting to websocket.');
+    const socket = new WebSocket(getWebSocketUrl());
+    socket.onmessage = event => {
+        console.log('Got message from server: ', event.data);
+        window.parent.postMessage(JSON.parse(event.data), '*');
+    };
+    socket.onclose = () => {
+        // Short delay before re-trying, so we don't overload the server.
+        // TODO: expontential backoff.
+        // TODO: do something to avoid thrashing between more than one client.
+        console.log('Disconnected; re-trying in 500ms');
+        setTimeout(connectWebSocket, 500);
+    };
+    window.addEventListener('message', event => {
+        if (event.source !== window.parent) {
+            return;
+        }
+        console.log('Got message parent frame: ', event.data);
+        socket.send(JSON.stringify(event.data));
+    });
+}
+connectWebSocket();
 
 },{"./apps/debugApp":269,"./apps/foyerApp":270,"./apps/helloApp":271,"./apps/todoApp":272,"./earthbar":273,"delay":85,"react":223,"react-dom":220}],269:[function(require,module,exports){
 "use strict";
