@@ -69365,6 +69365,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Earthbar = exports.EbTab = void 0;
 const React = __importStar(require("react"));
@@ -69396,11 +69405,11 @@ class Earthbar extends React.Component {
         this.state = {
             store: new earthbarStore_1.EarthbarStore(),
             activeTab: EbTab.AllClosed,
-            activeApp: Object.keys(this.props.apps)[0],
+            activeApp: Object.keys(this.props.apps)[0]
         };
     }
     componentDidMount() {
-        this.unsubFromStore = this.state.store.onChange.subscribe((e) => {
+        this.unsubFromStore = this.state.store.onChange.subscribe(e => {
             log_1.logEarthbar('>> EarthbarStore event ' + e.kind);
             log_1.logEarthbar('   --> forceUpdate the Earthbar');
             this.forceUpdate();
@@ -69416,7 +69425,7 @@ class Earthbar extends React.Component {
         log_1.logEarthbar('change app to', appName);
         this.setState({
             activeTab: EbTab.AllClosed,
-            activeApp: appName,
+            activeApp: appName
         });
     }
     getSyncSwitch() {
@@ -69508,50 +69517,71 @@ class Earthbar extends React.Component {
         // tab styles
         let selectedTabOpacity = 1; // 0.66
         let sWorkspaceTab = activeTab === EbTab.Workspace
-            ? { color: 'var(--cWorkspaceInk)', background: 'var(--cWorkspacePaper)', opacity: selectedTabOpacity } // selected
-            : { color: 'var(--cWorkspaceInk)', background: 'var(--cWorkspacePaper)',
+            ? {
+                color: 'var(--cWorkspaceInk)',
+                background: 'var(--cWorkspacePaper)',
+                opacity: selectedTabOpacity
+            } // selected
+            : {
+                color: 'var(--cWorkspaceInk)',
+                background: 'var(--cWorkspacePaper)',
                 //marginTop: 'var(--s-2)',
                 //paddingTop: 'var(--s-1)',
                 paddingBottom: 'var(--s-1)',
-                marginBottom: 'var(--s-2)',
+                marginBottom: 'var(--s-2)'
+                //borderRadius: 'var(--round)',
             };
         let sAppTab = activeTab === EbTab.App
-            ? { color: 'var(--cAppInk)', background: 'var(--cAppPaper)', opacity: selectedTabOpacity } // selected
-            : { color: 'var(--cAppInk)', background: 'var(--cAppPaper)',
+            ? {
+                color: 'var(--cAppInk)',
+                background: 'var(--cAppPaper)',
+                opacity: selectedTabOpacity
+            } // selected
+            : {
+                color: 'var(--cAppInk)',
+                background: 'var(--cAppPaper)',
                 //marginTop: 'var(--s-2)',
                 //paddingTop: 'var(--s-1)',
                 paddingBottom: 'var(--s-1)',
-                marginBottom: 'var(--s-2)',
+                marginBottom: 'var(--s-2)'
+                //borderRadius: 'var(--round)',
             };
         let sUserTab = activeTab === EbTab.User
-            ? { color: 'var(--cUserInk)', background: 'var(--cUserPaper)', opacity: selectedTabOpacity } // selected
-            : { color: 'var(--cUserInk)', background: 'var(--cUserPaper)',
+            ? {
+                color: 'var(--cUserInk)',
+                background: 'var(--cUserPaper)',
+                opacity: selectedTabOpacity
+            } // selected
+            : {
+                color: 'var(--cUserInk)',
+                background: 'var(--cUserPaper)',
                 //marginTop: 'var(--s-2)',
                 //paddingTop: 'var(--s-1)',
                 paddingBottom: 'var(--s-1)',
-                marginBottom: 'var(--s-2)',
+                marginBottom: 'var(--s-2)'
+                //borderRadius: 'var(--round)',
             };
         /*
-        let sSyncButton : any = {
-            background: 'var(--cWorkspaceInk)',
-            color: 'var(--cWorkspacePaper)',
-            border: '2px solid var(--cWorkspacePaper)',
-            marginTop: 'var(--s-2)',
-            marginBottom: 'var(--s-2)',
-        };
-        let sLiveButton : any = {
-            background: 'var(--cWorkspaceInk)',
-            color: 'var(--cWorkspacePaper)',
-            border: '2px solid var(--cWorkspacePaper)',
-            marginTop: 'var(--s-2)',
-            marginBottom: 'var(--s-2)',
-        };
-        */
+            let sSyncButton : any = {
+                background: 'var(--cWorkspaceInk)',
+                color: 'var(--cWorkspacePaper)',
+                border: '2px solid var(--cWorkspacePaper)',
+                marginTop: 'var(--s-2)',
+                marginBottom: 'var(--s-2)',
+            };
+            let sLiveButton : any = {
+                background: 'var(--cWorkspaceInk)',
+                color: 'var(--cWorkspacePaper)',
+                border: '2px solid var(--cWorkspacePaper)',
+                marginTop: 'var(--s-2)',
+                marginBottom: 'var(--s-2)',
+            };
+            */
         let syncSwitchState = this.getSyncSwitch();
         let syncSwitchText = {
             [SyncSwitchState.Off]: 'Sync: off',
             [SyncSwitchState.Bulk]: 'Syncing...',
-            [SyncSwitchState.Live]: 'Sync: live',
+            [SyncSwitchState.Live]: 'Sync: live'
         }[syncSwitchState];
         let sSyncSwitch = {
             background: 'var(--cWorkspaceInk)',
@@ -69562,7 +69592,7 @@ class Earthbar extends React.Component {
             marginTop: 'var(--s-2)',
             marginBottom: 'var(--s-2)',
             width: '11ch',
-            minWidth: '11ch',
+            minWidth: '11ch'
         };
         // tab click actions
         let onClickTab = (tab) => {
@@ -69579,7 +69609,7 @@ class Earthbar extends React.Component {
             panel = React.createElement(earthbarWorkspacePanel_1.EarthbarWorkspacePanel, { store: store });
         }
         else if (activeTab === EbTab.App) {
-            panel = React.createElement(earthbarAppPanel_1.EarthbarAppPanel, { appNames: Object.keys(this.props.apps), activeApp: this.state.activeApp, changeApp: this.changeApp.bind(this) });
+            panel = (React.createElement(earthbarAppPanel_1.EarthbarAppPanel, { appNames: Object.keys(this.props.apps), activeApp: this.state.activeApp, changeApp: this.changeApp.bind(this) }));
         }
         else if (activeTab === EbTab.User) {
             panel = React.createElement(earthbarUserPanel_1.EarthbarUserPanel, { store: store });
@@ -69595,41 +69625,44 @@ class Earthbar extends React.Component {
             userLabel = util_1.cutAtPeriod(store.currentUser.authorKeypair.address);
         }
         /*
-        let canSync = false;
-        if (kit !== null) {
-            // TODO: syncers
-            for (let syncer of Object.values(kit.syncers)) {
-                if (syncer.state.isBulkSyncing === false) {
-                    canSync = true;
+            let canSync = false;
+            if (kit !== null) {
+                // TODO: syncers
+                for (let syncer of Object.values(kit.syncers)) {
+                    if (syncer.state.isBulkSyncing === false) {
+                        canSync = true;
+                    }
                 }
+                //canSync = kit.syncer.state.pubs.length >= 1 && kit.syncer.state.syncState !== 'syncing';
             }
-            //canSync = kit.syncer.state.pubs.length >= 1 && kit.syncer.state.syncState !== 'syncing';
-        }
-        */
+            */
         // get appropriate app component
         let App = this.props.apps[this.state.activeApp];
         let changeKeyForApp = `store.onChange:${store.onChange.changeKey}__` +
             `storage.onWrite:${kit === null || kit === void 0 ? void 0 : kit.storage.onWrite.changeKey}`;
         //`syncer.onChange:${kit?.syncer.onChange.changeKey}`;
-        return React.createElement(React.Fragment, null,
+        return (React.createElement(React.Fragment, null,
             React.createElement("div", { className: 'earthbarColors earthbarTabRow' },
                 React.createElement("div", { className: 'flexRow centeredReadableWidth' },
                     React.createElement("button", { className: 'flexItem earthbarTab', style: sUserTab, onClick: () => onClickTab(EbTab.User) }, userLabel),
                     React.createElement("button", { className: 'flexItem earthbarTab', style: sWorkspaceTab, onClick: () => onClickTab(EbTab.Workspace) }, workspaceLabel),
                     React.createElement("button", { className: 'flexItem button', style: sSyncSwitch, disabled: syncSwitchState === SyncSwitchState.Bulk, onClick: () => this.setSyncSwitch(syncSwitchState === SyncSwitchState.Off) }, syncSwitchText),
+                    React.createElement("button", { className: 'flexItem button', style: sSyncSwitch, onClick: () => __awaiter(this, void 0, void 0, function* () {
+                            console.log('Fetch');
+                            const resp = yield fetch('/fetch');
+                            const result = yield resp.text();
+                            console.log('Result:', result);
+                        }) }, "Fetch"),
                     React.createElement("div", { className: 'flexItem flexGrow1', style: { margin: 0 } }),
                     React.createElement("button", { className: 'flexItem earthbarTab', style: sAppTab, onClick: () => onClickTab(EbTab.App) }, appLabel))),
             React.createElement("div", { style: { position: 'relative', minHeight: '100vh' } },
                 React.createElement("div", { className: 'earthbarPanel' },
                     React.createElement("div", { className: 'centeredReadableWidth' }, panel)),
-                activeTab === EbTab.AllClosed
-                    ? null
-                    : React.createElement("div", { className: 'earthbarPanelBackdrop earthbarColors', onClick: () => onClickTab(EbTab.AllClosed) }),
-                store.kit === null
-                    ? null // don't render the app when there's no kit (no workspace)
-                    // TODO: how should the app specify which changes it wants?  (storage, syncer)
-                    // TODO: how to throttle changes here?
-                    : React.createElement(App, { kit: store.kit, changeKey: changeKeyForApp })));
+                activeTab === EbTab.AllClosed ? null : (React.createElement("div", { className: 'earthbarPanelBackdrop earthbarColors', onClick: () => onClickTab(EbTab.AllClosed) })),
+                store.kit === null ? null : ( // don't render the app when there's no kit (no workspace)
+                // TODO: how should the app specify which changes it wants?  (storage, syncer)
+                // TODO: how to throttle changes here?
+                React.createElement(App, { kit: store.kit, changeKey: changeKeyForApp })))));
     }
 }
 exports.Earthbar = Earthbar;
