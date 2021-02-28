@@ -68881,13 +68881,13 @@ let apps = {
     'Hello World': helloApp_1.HelloApp
 };
 ReactDOM.render(React.createElement(earthbar_1.Earthbar, { apps: apps }), document.getElementById('react-slot'));
-// Sandstorm keep-alive
+// Sandstorm keep-alive (for development)
 function keepAlive() {
     return __awaiter(this, void 0, void 0, function* () {
         while (true) {
             console.log('Keep-alive fetch...');
             const resp = yield fetch('/.keep-alive');
-            yield delay_1.default(1000);
+            yield delay_1.default(60 * 1000);
         }
     });
 }
@@ -70348,8 +70348,14 @@ class EarthbarWorkspacePanel extends React.Component {
         let newPub = this.state.newPubInput.trim();
         if (newPub.length > 0) {
             if (newPub.startsWith('http://') || newPub.startsWith('https://')) {
-                this.props.store.addPub(newPub);
-                this.setState({ newPubInput: '' });
+                const match = newPub.match(/https:\/\/api-([a-f0-9]+)\.([^.]+)\.hex\.camp#(.*)$/);
+                if (match) {
+                    const proxyPub = `${location.origin}/proxy/https/` +
+                        `api-${match[1]}.${match[2]}.hex.camp/pub/` +
+                        `?token=${match[3].replace(/\//, '')}`;
+                    this.props.store.addPub(proxyPub);
+                    this.setState({ newPubInput: '' });
+                }
             }
         }
     }

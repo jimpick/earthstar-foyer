@@ -64,8 +64,14 @@ export class EarthbarWorkspacePanel extends React.Component<EbPanelProps, EbWork
         let newPub = this.state.newPubInput.trim();
         if (newPub.length > 0) {
             if (newPub.startsWith('http://') || newPub.startsWith('https://')) {
-                this.props.store.addPub(newPub);
-                this.setState({ newPubInput: '' });
+                const match = newPub.match(/https:\/\/api-([a-f0-9]+)\.([^.]+)\.hex\.camp#(.*)$/)
+                if (match) {
+                    const proxyPub = `${location.origin}/proxy/https/` +
+                        `api-${match[1]}.${match[2]}.hex.camp/pub/` +
+                        `?token=${match[3]}`
+                    this.props.store.addPub(proxyPub);
+                    this.setState({ newPubInput: '' });
+                }
             }
         }
     }

@@ -26,13 +26,13 @@ let apps = {
 
 ReactDOM.render(<Earthbar apps={apps} />, document.getElementById('react-slot'))
 
-// Sandstorm keep-alive
+// Sandstorm keep-alive (for development)
 
 async function keepAlive () {
   while (true) {
     console.log('Keep-alive fetch...')
     const resp = await fetch('/.keep-alive')
-    await delay(1000)
+    await delay(60 * 1000)
   }
 }
 keepAlive()
