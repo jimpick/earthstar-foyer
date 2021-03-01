@@ -70328,7 +70328,7 @@ let sWorkspacePanel = {
     borderTopRightRadius: 'var(--round)',
     borderBottomLeftRadius: 'var(--round)',
     borderBottomRightRadius: 'var(--round)',
-    boxShadow: '0px 13px 10px 0px rgba(0,0,0,0.3)',
+    boxShadow: '0px 13px 10px 0px rgba(0,0,0,0.3)'
 };
 class EarthbarWorkspacePanel extends React.Component {
     constructor(props) {
@@ -70336,7 +70336,7 @@ class EarthbarWorkspacePanel extends React.Component {
         this.state = {
             newPubInput: '',
             newWorkspaceInput: '',
-            newWorkspaceError: null,
+            newWorkspaceError: null
         };
     }
     //-------------------------
@@ -70351,11 +70351,14 @@ class EarthbarWorkspacePanel extends React.Component {
                 const match = newPub.match(/https:\/\/api-([a-f0-9]+)\.([^.]+)\.hex\.camp#(.*)$/);
                 if (match) {
                     const proxyPub = `${location.origin}/proxy/https/` +
-                        `api-${match[1]}.${match[2]}.hex.camp/pub/` +
-                        `?token=${match[3].replace(/\//, '')}`;
+                        `api-${match[1]}.${match[2]}.hex.camp/` +
+                        `?token=${match[3]}`;
                     this.props.store.addPub(proxyPub);
-                    this.setState({ newPubInput: '' });
                 }
+                else {
+                    this.props.store.addPub(newPub);
+                }
+                this.setState({ newPubInput: '' });
             }
         }
     }
@@ -70363,7 +70366,7 @@ class EarthbarWorkspacePanel extends React.Component {
         if (val === '') {
             this.setState({
                 newWorkspaceInput: '',
-                newWorkspaceError: null,
+                newWorkspaceError: null
             });
             return;
         }
@@ -70374,7 +70377,7 @@ class EarthbarWorkspacePanel extends React.Component {
         }
         this.setState({
             newWorkspaceInput: val,
-            newWorkspaceError: err,
+            newWorkspaceError: err
         });
     }
     handleAddWorkspace() {
@@ -70400,35 +70403,39 @@ class EarthbarWorkspacePanel extends React.Component {
             allWorkspaces = [...allWorkspaces, store.currentWorkspace];
             util_1.sortByField(allWorkspaces, 'workspaceAddress');
         }
-        return React.createElement("div", { className: 'stack unselectable', style: sWorkspacePanel },
-            store.currentWorkspace === null
-                ? null
-                : React.createElement("div", { className: 'stack' },
-                    React.createElement("div", { className: 'faint' }, "Current workspace"),
-                    React.createElement("div", { className: 'indent flexRow selectable' },
-                        React.createElement("div", { className: 'flexGrow1 flexItemVerticalCenter wrappyText monospace' }, store.currentWorkspace.workspaceAddress),
-                        React.createElement("button", { className: 'button flexItem', type: 'button', style: { marginLeft: 'var(--s-1)' }, onClick: () => { var _a; return this.handleCopy(((_a = store.currentWorkspace) === null || _a === void 0 ? void 0 : _a.workspaceAddress) || ''); } }, "Copy")),
-                    React.createElement("div", { className: 'faint' }, "Pub servers for this workspace"),
-                    React.createElement("div", { className: 'stack' },
-                        store.kit === null ? [] : Object.entries(store.kit.syncers)
-                            .map(pair => {
+        return (React.createElement("div", { className: 'stack unselectable', style: sWorkspacePanel },
+            store.currentWorkspace === null ? null : (React.createElement("div", { className: 'stack' },
+                React.createElement("div", { className: 'faint' }, "Current workspace"),
+                React.createElement("div", { className: 'indent flexRow selectable' },
+                    React.createElement("div", { className: 'flexGrow1 flexItemVerticalCenter wrappyText monospace' }, store.currentWorkspace.workspaceAddress),
+                    React.createElement("button", { className: 'button flexItem', type: 'button', style: { marginLeft: 'var(--s-1)' }, onClick: () => {
+                            var _a;
+                            return this.handleCopy(((_a = store.currentWorkspace) === null || _a === void 0 ? void 0 : _a.workspaceAddress) || '');
+                        } }, "Copy")),
+                React.createElement("div", { className: 'faint' }, "Pub servers for this workspace"),
+                React.createElement("div", { className: 'stack' },
+                    store.kit === null
+                        ? []
+                        : Object.entries(store.kit.syncers).map(pair => {
                             let [domain, syncer] = pair;
                             let icon = '📡';
                             if (syncer.state.isBulkSyncing) {
                                 icon = '⏳';
                             }
-                            return React.createElement("div", { key: domain, className: 'flexRow selectable' },
+                            return (React.createElement("div", { key: domain, className: 'flexRow selectable' },
                                 React.createElement("div", { className: 'flexItem flexItemVerticalCenter unselectable unclickable' }, icon),
                                 React.createElement("div", { className: 'flexItem flexGrow1 wrappyText' },
                                     React.createElement("a", { href: domain, target: '_blank', style: { color: 'var(--cText)' } }, domain)),
-                                React.createElement("button", { className: 'flexItem linkButton unselectable', onClick: () => store.removePub(domain) }, "\u2715"));
+                                React.createElement("button", { className: 'flexItem linkButton unselectable', onClick: () => store.removePub(domain) }, "\u2715")));
                         }),
-                        React.createElement("form", { className: 'flexRow indent', onSubmit: (e) => { e.preventDefault(); this.handleAddPub(); } },
-                            React.createElement("input", { type: 'text', className: 'flexItem flexGrow1 monospace', placeholder: "http://...", value: this.state.newPubInput, onChange: (e) => this.setState({ newPubInput: e.target.value }) }),
-                            React.createElement("button", { className: 'button flexItem', type: 'submit' }, "Add")),
-                        store.kit === null || Object.keys(store.kit.syncers).length === 0
-                            ? React.createElement("div", { className: 'indent faint' }, "Add pub server(s) if you want to sync with other people. Otherwise your data will only be saved in this browser.")
-                            : null)),
+                    React.createElement("form", { className: 'flexRow indent', onSubmit: e => {
+                            e.preventDefault();
+                            this.handleAddPub();
+                        } },
+                        React.createElement("input", { type: 'text', className: 'flexItem flexGrow1 monospace', placeholder: 'http://...', value: this.state.newPubInput, onChange: e => this.setState({ newPubInput: e.target.value }) }),
+                        React.createElement("button", { className: 'button flexItem', type: 'submit' }, "Add")),
+                    store.kit === null ||
+                        Object.keys(store.kit.syncers).length === 0 ? (React.createElement("div", { className: 'indent faint' }, "Add pub server(s) if you want to sync with other people. Otherwise your data will only be saved in this browser.")) : null))),
             React.createElement("hr", { className: 'faint' }),
             React.createElement("div", { className: 'faint' }, "Recent workspaces"),
             React.createElement("div", { className: 'stack indent' }, allWorkspaces.map(wsConfig => {
@@ -70437,20 +70444,21 @@ class EarthbarWorkspacePanel extends React.Component {
                 let style = isCurrent
                     ? { fontStyle: 'italic', background: 'rgba(255,255,255,0.2)' }
                     : {};
-                return React.createElement("div", { key: wsConfig.workspaceAddress, className: 'flexRow' },
-                    React.createElement("a", { href: "#", style: style, className: 'flexItem flexGrow1 flexItemVerticalCenter linkButton monospace wrappyText', onClick: (e) => store.switchWorkspace(wsConfig) }, wsConfig.workspaceAddress),
-                    React.createElement("button", { className: 'flexItem linkButton', onClick: () => store.removeWorkspace(wsConfig.workspaceAddress) }, "\u2715"));
+                return (React.createElement("div", { key: wsConfig.workspaceAddress, className: 'flexRow' },
+                    React.createElement("a", { href: '#', style: style, className: 'flexItem flexGrow1 flexItemVerticalCenter linkButton monospace wrappyText', onClick: e => store.switchWorkspace(wsConfig) }, wsConfig.workspaceAddress),
+                    React.createElement("button", { className: 'flexItem linkButton', onClick: () => store.removeWorkspace(wsConfig.workspaceAddress) }, "\u2715")));
             })),
             React.createElement("hr", { className: 'faint' }),
             React.createElement("div", { className: 'faint' }, "Add workspace or create new one"),
-            React.createElement("form", { className: 'stack indent', onSubmit: (e) => { e.preventDefault(); this.handleAddWorkspace(); } },
-                React.createElement("input", { type: 'text', className: 'width100 monospace', placeholder: '+myworkspace.z0x7b098xc7', value: this.state.newWorkspaceInput, onChange: (e) => this.handleEditNewWorkspace(e.target.value) }),
-                this.state.newWorkspaceError === null
-                    ? null
-                    : React.createElement("div", null, this.state.newWorkspaceError),
+            React.createElement("form", { className: 'stack indent', onSubmit: e => {
+                    e.preventDefault();
+                    this.handleAddWorkspace();
+                } },
+                React.createElement("input", { type: 'text', className: 'width100 monospace', placeholder: '+myworkspace.z0x7b098xc7', value: this.state.newWorkspaceInput, onChange: e => this.handleEditNewWorkspace(e.target.value) }),
+                this.state.newWorkspaceError === null ? null : (React.createElement("div", null, this.state.newWorkspaceError)),
                 React.createElement("div", { className: 'faint' }, "A workspace has two parts: a word up to 15 letters long, and a random part that's hard to guess. If you're creating a new workspace, just make up the random part by mashing the keyboard."),
                 React.createElement("div", { className: 'right' },
-                    React.createElement("button", { className: 'button', type: 'submit', disabled: this.state.newWorkspaceError !== null }, "Add or Create"))));
+                    React.createElement("button", { className: 'button', type: 'submit', disabled: this.state.newWorkspaceError !== null }, "Add or Create")))));
     }
 }
 exports.EarthbarWorkspacePanel = EarthbarWorkspacePanel;
